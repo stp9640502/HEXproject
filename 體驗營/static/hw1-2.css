@@ -141,7 +141,7 @@ table {
 
 body{
     font-size: 24px;
-
+    font-family: 'Noto Sans', sans-serif;
 }
 
 .container{
@@ -150,10 +150,12 @@ body{
 }
 
 .title{
+    font-family: 'Roboto', sans-serif;
     font-size: 80px;
     margin-top: 47px;
     padding-bottom: 17px;
     border-bottom: 2px solid #000;
+    line-height: 94px;
 }
 .subtitle{
     font-size: 32px;
@@ -164,6 +166,7 @@ body{
 .subtitle span{
     color: #A00404;
     font-size: 24px;
+    font-family: 'Roboto', sans-serif;
 }
 
 .subtitle-darkblue{
@@ -188,6 +191,7 @@ li{
     margin: 0 auto;
 }
 .skill{
+    font-family: 'Roboto', sans-serif;
     text-align: left;
     margin: 0 auto;
     padding-left: 24px;
@@ -203,6 +207,7 @@ li{
     text-align: center;
     padding-top: 32px;
     padding-bottom: 36px;
+    font-family: 'Roboto', sans-serif;
 }
 
 .mb-1{
