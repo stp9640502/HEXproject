@@ -203,10 +203,13 @@ li{
     padding-left: 24px;
     border-left: 1px solid #96A9C4;
 }
+.work p {
+    font-size: 20px;
+}
 .method{
     text-align: center;
     padding-top: 32px;
-    padding-bottom: 36px;
+    padding-bottom: 20px;
     font-family: 'Roboto', sans-serif;
 }
 
