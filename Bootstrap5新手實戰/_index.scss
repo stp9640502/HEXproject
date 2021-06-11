@@ -1,0 +1,193 @@
+body {
+    font-family: 'Noto Sans TC', sans-serif;
+    font-weight: 400;
+}
+
+.ff-BT2 {
+    font-family: 'Baloo Tammudu 2', cursive;
+}
+
+.ff-NS {
+    font-family: 'Noto Sans TC', sans-serif;
+}
+
+.fw-Medium {
+    font-weight: 500 !important;
+}
+
+.fw-Semi-bold {
+    font-weight: 600 !important;
+}
+
+.br-1 {
+    border-radius: 4px;
+}
+
+.br-2 {
+    border-radius: 8px;
+}
+
+.br-3 {
+    border-radius: 19px;
+}
+
+.br-4 {
+    border-radius: 26px;
+}
+
+.fs-7 {
+    font-size: 12px;
+}
+
+ul,
+li {
+    padding: 0;
+    list-style: none;
+}
+
+.btn {
+    color: #636057;
+    font-weight: 600;
+    border: 1px solid #ffdf65;
+    &:hover {
+        background: #ff785e;
+        border: 1px solid #ff785e;
+        color: white;
+    }
+}
+
+.btn-light {
+    background: white;
+    border: 1px solid #858377;
+    color: #858377;
+    &:hover {
+        background: white;
+        color: #858377;
+        border: 1px solid #858377;
+    }
+}
+
+.navbar {
+    img {
+        width: 111px;
+    }
+    .nav-link {
+        font-weight: 400;
+    }
+    .btn {
+        width: 96px;
+        border-radius: 19px;
+        font-weight: 700;
+    }
+}
+
+.header .btn-light:hover {
+    color: #858377;
+    background: #FFDF65;
+    i {
+        color: #FF785E
+    }
+}
+
+.header {
+    background: #F8F9FA;
+}
+
+.icon img {
+    margin-right: 25px;
+    ;
+}
+
+.Mask span {
+    color: #000027;
+    line-height: 24px;
+}
+
+.content-navs {
+    border: 1px solid #E8E8DB;
+}
+
+.nav-tabs {
+    border: 0;
+    .nav-link {
+        padding-top: 22px;
+        padding-bottom: 22px;
+        border: 0;
+    }
+    .nav-link.active {
+        border-bottom: 2px solid;
+        border-color: #fff #fff #FFDF65;
+    }
+}
+
+.right-section {
+    height: calc(100vh - 72px);
+    top: 72px;
+}
+
+.office {
+    border: 1px solid #E5E5E5;
+    margin-bottom: 32px;
+    p {
+        color: #373A3C;
+        letter-spacing: 0.7px;
+    }
+    .btn {
+        border-radius: 15px;
+    }
+}
+
+.plans {
+    background: #F8F9FA;
+}
+
+.plan {
+    border: 1px solid #E8E8DB;
+}
+
+.time {
+    border-bottom: 1px solid #E8E8DB;
+}
+
+.plan-title {
+    font-size: 18px;
+}
+
+.help-num {
+    background: #E8E8DB;
+}
+
+#GiveMeMoney {
+    .form-select,
+    .form-control {
+        background-color: #F7F7F7;
+    }
+    .form-text:hover {
+        .form-control,
+        .form-select {
+            border: 1px solid #FF785E;
+        }
+        p {
+            font-size: 14px;
+            color: #F48263;
+            display: block !important;
+            margin: 0;
+        }
+    }
+    .btn {
+        display: block;
+        width: 176px;
+        border: 1px solid #FFDF65;
+        border-radius: 26px;
+        font-size: 20px;
+    }
+}
+
+.form-select {
+    color: #999999;
+}
+
+.footer {
+    padding-top: 32px;
+    padding-bottom: 32px;
+}
