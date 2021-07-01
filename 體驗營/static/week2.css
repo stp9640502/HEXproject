@@ -183,6 +183,11 @@ a {
   padding-right: 30px;
 }
 
+.menu a:hover {
+  background: #3F5D45;
+  color: #EAF0ED;
+}
+
 .banner {
   margin-bottom: 60px;
 }
@@ -217,7 +222,7 @@ a {
   display: block;
 }
 
-.content-menu li:nth-child(1) {
+.content-menu li:hover {
   background: #EAF0ED;
 }
 
@@ -266,6 +271,10 @@ a {
   right: 22px;
 }
 
+.product i:hover {
+  color: pink;
+}
+
 .product .product-body {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -293,5 +302,11 @@ a {
   display: block;
   background: #EAF0ED;
   padding: 16px 90px;
+  text-align: center;
+}
+
+.product .addcart:hover {
+  background: #3F5D45;
+  color: #EAF0ED;
 }
 /*# sourceMappingURL=week2.css.map */
