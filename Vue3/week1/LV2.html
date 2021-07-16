@@ -21,7 +21,12 @@
                 現在圖片解析度：
                 <span v-if="status">清晰</span><span v-else>模糊</span>
             </div>
-            <button type="button" class="btn btn-outline-primary mb-3" @click="loading()">載入新資料</button>
+            <div class="h2">
+                <span>幫我抓<input type="text" v-model="num" class="text-center mx-3">筆資料</span>
+                
+                <button type="button" class="btn btn-outline-primary mb-3" @click="loading()">載入新資料</button>
+            </div>
+
             <div class="row">
                 <div class="col-md-4 mb-3" v-for="item in people">
                     <div class="card h-100">
@@ -86,13 +91,14 @@
                 return {
                     status: true,
                     people: [],
-                    info: 'JS測試'
+                    num: 12,
                 };
             },
             methods: {
                 loading() {
+                    let num = this.num;
                     axios
-                        .get('https://randomuser.me/api/?results=12')
+                        .get(`https://randomuser.me/api/?results=${num}`)
                         .then(res => this.people = res.data.results);
                 },
             },
