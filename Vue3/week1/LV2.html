@@ -15,15 +15,17 @@
     <div id="app">
         <div class="container">
             <div class="my-3">
-                <button type="button" class="btn btn-outline-primary" @click="status = !status">
+                <button type="button" class="btn btn-outline-primary" @click="status += 1">
                     切換大頭貼解析度
                 </button>
                 現在圖片解析度：
-                <span v-if="status">清晰</span><span v-else>模糊</span>
+                <span v-if="status%3===0">清晰</span>
+                <span v-else-if="status%3===1">普通</span>
+                <span v-else>模糊</span>
             </div>
             <div class="h2">
                 <span>幫我抓<input type="text" v-model="num" class="text-center mx-3">筆資料</span>
-                
+
                 <button type="button" class="btn btn-outline-primary mb-3" @click="loading()">載入新資料</button>
             </div>
 
@@ -36,7 +38,8 @@
                                 <i class="bi bi-heart-fill fs-5" v-else></i>
                             </button>
                         </div>
-                        <img v-if="status" :src="item.picture.large" class="card-img-top" />
+                        <img v-if="status%3===0" :src="item.picture.large" class="card-img-top" />
+                        <img v-else-if="status%3===1" :src="item.picture.medium" class="card-img-top" />
                         <img v-else :src="item.picture.thumbnail" class="card-img-top" />
                         <div class="card-body">
                             <h5 class="card-title">
@@ -89,9 +92,9 @@
         const app = Vue.createApp({
             data() {
                 return {
-                    status: true,
+                    status: 0,
                     people: [],
-                    num: 12,
+                    num: 3,
                 };
             },
             methods: {
