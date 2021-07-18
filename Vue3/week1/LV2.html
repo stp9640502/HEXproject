@@ -103,7 +103,12 @@
                     let num = this.num;
                     axios
                         .get(`https://randomuser.me/api/?results=${num}`)
-                        .then(res => this.people = res.data.results);
+                        .then(res => {
+                            this.people = res.data.results
+                        })
+                        .catah(err => {
+                            console.log(err.response)
+                        });
                     this.people.forEach(ele => { ele.love = false })
                 },
             },

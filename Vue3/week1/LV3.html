@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue3-week1-LV3</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <style>
+        body {
+            background: #eaf0ed;
+        }
+
+        .card-text {
+            color: #3F5D45;
+        }
+
+        .card-text>span {
+            color: red;
+        }
+
+        .card-text a,
+        .card-text span {
+            padding-left: 16px;
+            padding-right: 16px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class="container my-3">
+            <div class="row">
+                <div class="col-md-3">
+                    <p>請選擇總共要抓幾筆資料:
+                        <input type="text" class="me-3 text-center" v-model="dataNum">
+                        <button type="button" class="btn btn-info text-light" @click="loading">刷新</button>
+                    </p>
+
+                    <div class="mt-4">
+                        <h2>切換大頭照解析度</h2>
+                        <p>目前狀態 :
+                            <span v-if="status==0">清晰</span>
+                            <span v-else-if="status==1">普通</span>
+                            <span v-else>模糊</span>
+                        </p>
+                        <button type="button" class="btn btn-primary mb-3 w-75" @click="status=0">清晰</button>
+                        <button type="button" class="btn btn-primary mb-3 w-75" @click="status=1">普通</button>
+                        <button type="button" class="btn btn-primary mb-3 w-75" @click="status=2">模糊</button>
+                        <hr>
+                        <button type="button" class="btn btn-primary mb-3 w-75" @click="map=!map">切換地圖</button>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="card mb-3 rounded" v-for="(item,i) in data">
+                        <div class="row g-0">
+                            <div class="col-md-4" v-if="map">
+                                <img class="w-100 h-100" :src="item.picture.large" v-if="status==0">
+                                <img class="w-100 h-100" :src="item.picture.medium" v-else-if="status==1">
+                                <img class="w-100 h-100" :src="item.picture.thumbnail" v-else>
+                            </div>
+                            <div class="col-md-4" v-else>
+                                <iframe class="w-100 h-100"  frameborder="0" scrolling="no" marginheight="0"
+                                    marginwidth="0"
+                                    :src="'https://maps.google.com.tw/maps?f=q&amp;hl=zh-TW&amp;geocode=&amp;q='+item.location.coordinates.latitude+','+item.location.coordinates.longitude+'&amp;z=10&amp;output=embed'"></iframe>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="position-absolute text-center text-light"
+                                    style="top: 10px; left: 20px; width: 20px; background:#3F5D45">{{ i+1 }}</div>
+                                <div class="position-absolute" style="top: 16px; right: 20px">
+                                    <button type="button" class="btn btn-outline-danger rounded-pill"
+                                        @click="item.love = !item.love">
+                                        <i class="far fa-heart fa-5" v-if="!item.love"></i>
+                                        <i class="fa fa-heart fa-5" v-else></i>
+                                    </button>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        {{ item.name.title }} {{ item.name.first }} {{ item.name.last }}
+                                        ( <span v-if="item.gender === 'male'">👨</span><span v-else>👩</span> )
+                                    </h5>
+                                    <p class="card-text">
+                                        country :<span>{{ item.location.country}}</span>
+                                        city :<span>{{ item.location.city }}</span>
+                                    </p>
+                                    <p class="card-text">E-mail :<a :href="`mailto:${item.email}`">{{ item.email }}</a>
+                                    </p>
+                                    <p class="card-text">
+                                        cell :<span>{{item.cell }}</span>
+                                        phone :<span>{{ item.phone }}</span>
+                                    </p>
+                                    <p class="card-text">
+                                        DoB : <span>{{ item.dob.date }}</span>
+                                        age : <span>{{ item.dob.age }} years old</span>
+                                    </p>
+                                    <p class="card-text">
+                                        <small>timezone : {{ item.location.timezone.description }}<span>( GMT{{
+                                                item.location.timezone.offset }} )</span></small>
+                                    </p>
+                                    <p class="card-text">
+                                        <small>coordinates : <span>{{ item.location.coordinates.latitude }} , {{
+                                                item.location.coordinates.longitude}}</span></small>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    data: [],
+                    dataNum: 6,
+                    status: 0,
+                    map:true,
+                }
+
+            },
+            methods: {
+                loading() {
+                    let num = this.dataNum
+                    axios
+                        .get(`https://randomuser.me/api/?results=${num}`)
+                        .then(res => {
+                            this.data = res.data.results;
+                        })
+                        .catch(err => console.log(err.results));
+                },
+            },
+            mounted() {
+                this.loading();
+            },
+        });
+        app.mount('#app');
+    </script>
+</body>
+
+</html>
