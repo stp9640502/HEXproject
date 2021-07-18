@@ -28,6 +28,10 @@
             padding-left: 16px;
             padding-right: 16px;
         }
+        .tag{
+            padding: 8px;
+            background: #3f5d45;
+        }
     </style>
 </head>
 
@@ -69,8 +73,8 @@
                                     :src="'https://maps.google.com.tw/maps?f=q&amp;hl=zh-TW&amp;geocode=&amp;q='+item.location.coordinates.latitude+','+item.location.coordinates.longitude+'&amp;z=10&amp;output=embed'"></iframe>
                             </div>
                             <div class="col-md-8">
-                                <div class="position-absolute text-center text-light"
-                                    style="top: 10px; left: 20px; width: 20px; background:#3F5D45">{{ i+1 }}</div>
+                                <div class="tag position-absolute text-center text-light "
+                                    style="top: 10px; left: 20px;">{{ i+1 }}</div>
                                 <div class="position-absolute" style="top: 16px; right: 20px">
                                     <button type="button" class="btn btn-outline-danger rounded-pill"
                                         @click="item.love = !item.love">
