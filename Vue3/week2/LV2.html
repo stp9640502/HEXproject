@@ -111,7 +111,9 @@
                     this.num2 = '';
                 },
                 getData() {
-                    this.data = JSON.parse(localStorage.getItem('list'));
+                    if (localStorage.getItem('list')) {
+                        this.data = JSON.parse(localStorage.getItem('list'));
+                    }
                 },
                 pushData(strData) {
                     this.data.push(strData);
