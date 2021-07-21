@@ -96,10 +96,10 @@
                             this.ans = this.num1 / this.num2;
                             break;
                     }
-                    this.test();
+                    this.setData();
                     this.reset();
                 },
-                test() {
+                setData() {
                     let strData = `${this.num1} ${this.operator} ${this.num2} = ${this.ans}`;
                     if (this.data.length > 9) {
                         this.data.splice(0, 1);
