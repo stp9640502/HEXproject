@@ -9,7 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
     <style>
-        .btn{
+        .btn {
             background: #EAF0ED;
         }
     </style>
@@ -71,10 +71,12 @@
             </div>
             <div class="row justify-content-center my-3">
                 <div class="col-4 border p-3">
-                    <h3>已知Bug : (Ps.我就爛 OuOb)</h3>
+                    <h3>不夠完美的部分:</h3>
                     <ul>
-                        <li>輸出後，若未清除上一組數據，會接續上一組數字。</li>
+                        <li>還不能輸入小數</li>
+                        <li>v-for的key不夠熟</li>
                     </ul>
+                    <p class="h1 text-info">我就爛 OuOb</p>
 
                 </div>
                 <div class="col-4 border p-3">
@@ -83,7 +85,6 @@
                         <li v-for="item in history" v-html="item"></li>
                     </ul>
                 </div>
-
             </div>
         </div>
     </div>
@@ -97,14 +98,19 @@
                     num: 0,//暫存數字
                     num1: 0,
                     num2: 0,
-                    ans: '',
+                    ans: 0,
                     operator: '',
+                    status: false,
                     history: [],
                 }
             },
             methods: {
                 inputNum(e) { //數字輸入
                     // console.log(e.target.value);
+                    if (this.status == true) {
+                        this.allClear();
+                        this.status = false;
+                    }
                     this.num = this.num * 10 + parseInt(e.target.value);
                 },
                 compute(e) { //選擇計算方法
@@ -148,6 +154,7 @@
                     this.setData();
                     this.num = this.ans;
                     this.reset();
+                    this.status = true;
                 },
 
                 allClear() {
@@ -175,7 +182,7 @@
                 getData() { //取得JSON資料
                     if (localStorage.getItem('list')) {
                         this.history = JSON.parse(localStorage.getItem('list'));
-                    }
+                    };
                 },
                 pushData(strData) { //傳送JSON資料
                     this.history.push(strData);
@@ -185,6 +192,7 @@
             },
             mounted() {
                 this.allClear();
+                this.getData();
             },
         });
         app.mount('#app')
