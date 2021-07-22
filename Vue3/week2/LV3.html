@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue3 week2 LV3</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <style>
+        .btn{
+            background: #EAF0ED;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" class="container my-5">
+        <h1 class="text-center">計算機</h1>
+        <div class="row justify-content-center ">
+            <div class="col-md-8">
+                <div class="row border">
+                    <div class="col-12 py-4">
+                        <p class="h5">{{ num1 }} {{ operator }} </p>
+                        <p class="h3 w-100">{{ num }}</p>
+                    </div>
+                    <hr>
+                    <div class="col-md-9 mt-3">
+                        <div class="btn-group w-100 mb-3">
+                            <button class="btn btn-outline-primary w-25" v-for="num in 3" @click="inputNum"
+                                :value="num+6">{{ num+6 }}</button>
+                        </div>
+                        <div class="btn-group w-100 mb-3">
+                            <button class="btn btn-outline-primary w-25" v-for="num in 3" @click="inputNum"
+                                :value="num+3">{{ num+3 }}</button>
+                        </div>
+                        <div class="btn-group w-100 mb-3">
+                            <button class="btn btn-outline-primary w-25" v-for="num in 3" @click="inputNum"
+                                :value="num">{{ num }}</button>
+                        </div>
+                        <div class="btn-group w-100 mb-3 ">
+                            <button class="btn btn-outline-primary w-50" @click="">0</button>
+                            <button type="button" class="btn btn-outline-primary d-block w-50" @click="ANSwer">
+                                =
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mt-3">
+                        <button type="button" class="btn btn-outline-primary w-100 mb-1" @click="allClear">
+                            AC
+                        </button>
+                        <button type="button" class="btn btn-outline-primary w-100 mb-1" :class="{active:operator=='+'}"
+                            @click="compute" :value="'+'">
+                            +
+                        </button>
+                        <button type="button" class="btn btn-outline-primary w-100 mb-1" :class="{active:operator=='-'}"
+                            @click="compute" :value="'-'">
+                            -
+                        </button>
+                        <button type="button" class="btn btn-outline-primary w-100 mb-1" :class="{active:operator=='*'}"
+                            @click="compute" :value="'*'">
+                            *
+                        </button>
+                        <button type="button" class="btn btn-outline-primary w-100 mb-1" :class="{active:operator=='/'}"
+                            @click="compute" :value="'/'">
+                            /
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="row my-3">
+                <div class="col-4 border p-3">
+                    <h3>已知Bug :</h3>
+                    <ul>
+                        <li>輸出後，若未清除上一組數據，會接續上一組數字。</li>
+                    </ul>
+
+                </div>
+                <div class="col-8 border p-3">
+                    <h3 class="">歷史紀錄 :</h3>
+                    <ul>
+                        <li v-for="item in history" v-html="item"></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://unpkg.com/vue@next"></script>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    num: 0,//暫存數字
+                    num1: 0,
+                    num2: 0,
+                    ans: '',
+                    operator: '',
+                    history: [],
+                }
+            },
+            methods: {
+                inputNum(e) { //數字輸入
+                    // console.log(e.target.value);
+                    this.num = this.num * 10 + parseInt(e.target.value);
+                },
+                compute(e) { //選擇計算方法
+                    this.num1 = this.num;
+                    this.num = 0;
+                    switch (e.target.value) {
+                        case '+':
+                            //console.log(e.target.value);
+                            this.operator = '+';
+                            break;
+                        case '-':
+                            //console.log(e.target.value);
+                            this.operator = '-';
+                            break;
+                        case '*':
+                            //console.log(e.target.value);
+                            this.operator = '*';
+                            break;
+                        case '/':
+                            //console.log(e.target.value);
+                            this.operator = '/';
+                            break;
+                    }
+                },
+                ANSwer() {
+                    this.num2 = this.num;
+                    switch (this.operator) {
+                        case '+':
+                            this.ans = this.num1 + this.num2;
+                            break;
+                        case '-':
+                            this.ans = this.num1 - this.num2;
+                            break;
+                        case '*':
+                            this.ans = this.num1 * this.num2;
+                            break;
+                        case '/':
+                            this.ans = this.num1 / this.num2;
+                            break;
+                    }
+                    this.setData();
+                    this.num = this.ans;
+                    this.reset();
+                },
+
+                allClear() {
+                    this.num = 0;
+                    this.ans = '';
+                    this.reset();
+
+                },
+                reset() {
+                    this.num1 = '';
+                    this.num2 = '';
+                    this.operator = '';
+                },
+                setData() { //設定傳送資料字串
+                    if (this.num1 == '' || this.num2 == '') {
+                        alert('請輸入數字');
+                        return;
+                    }
+                    let strData = `${this.num1} ${this.operator} ${this.num2} = ${this.ans}`;
+                    if (this.history.length > 9) {
+                        this.history.splice(0, 1);
+                    }
+                    this.pushData(strData);
+                },
+                getData() { //取得JSON資料
+                    if (localStorage.getItem('list')) {
+                        this.history = JSON.parse(localStorage.getItem('list'));
+                    }
+                },
+                pushData(strData) { //傳送JSON資料
+                    this.history.push(strData);
+                    let objData = JSON.stringify(this.history);
+                    localStorage.setItem('list', objData);
+                },
+            },
+            mounted() {
+                this.allClear();
+            },
+        });
+        app.mount('#app')
+    </script>
+</body>
+
+</html>
