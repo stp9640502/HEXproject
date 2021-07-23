@@ -22,7 +22,7 @@
             <div class="col-md-8">
                 <div class="row border">
                     <div class="col-12 py-4">
-                        <p class="h5">{{ num1 }} {{ operator }}</p>
+                        <p class="h5">{{ num1 }} {{ operator }} <span v-if="status">{{ strNum }}</span></p>
                         <p class="h3 w-100">{{ num }}</p>
                     </div>
                     <hr>
@@ -96,6 +96,7 @@
             data() {
                 return {
                     num: 0,//暫存數字
+                    strNum: '',//暫存字串
                     num1: 0,
                     num2: 0,
                     ans: 0,
@@ -114,7 +115,7 @@
                     this.num = this.num * 10 + parseInt(e.target.value);
                 },
                 compute(e) { //選擇計算方法
-                    this.num1 = this.num; 
+                    this.num1 = this.num;
                     this.num = 0;
                     switch (e.target.value) {
                         case '+':
@@ -164,6 +165,7 @@
 
                 allClear() {
                     this.num = 0;
+                    this.strNum = '',
                     this.ans = '';
                     this.reset();
 
@@ -178,7 +180,8 @@
                         alert('請輸入數字');
                         return;
                     }
-                    let strData = `${this.num1} ${this.operator} ${this.num2} = ${this.ans}`;
+                    this.strNum = `${this.num1} ${this.operator} ${this.num2} = `
+                    let strData = `${this.strNum}  ${this.ans}`;
                     if (this.history.length > 9) {
                         this.history.splice(0, 1);
                     }
