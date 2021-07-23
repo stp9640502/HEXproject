@@ -114,7 +114,7 @@
                     this.num = this.num * 10 + parseInt(e.target.value);
                 },
                 compute(e) { //選擇計算方法
-                    this.num1 = this.num;
+                    this.num1 = this.num; 
                     this.num = 0;
                     switch (e.target.value) {
                         case '+':
@@ -134,8 +134,13 @@
                             this.operator = '/';
                             break;
                     }
+                    this.status = false;
                 },
                 ANSwer() {
+                    if (this.operator == '') {
+                        alert('不要再點了，你沒有選擇運算符')
+                        return;
+                    }
                     this.num2 = this.num;
                     switch (this.operator) {
                         case '+':
@@ -169,7 +174,7 @@
                     this.operator = '';
                 },
                 setData() { //設定傳送資料字串
-                    if (this.num1 == '' || this.num2 == '') {
+                    if (this.num1 === '' || this.num2 === '') {
                         alert('請輸入數字');
                         return;
                     }
