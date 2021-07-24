@@ -112,13 +112,13 @@
                 },
                 getData() {
                     if (localStorage.getItem('list')) {
-                        this.data = JSON.parse(localStorage.getItem('list'));
+                        this.data = JSON.parse(localStorage.getItem('listLV3'));
                     }
                 },
                 pushData(strData) {
                     this.data.push(strData);
                     let objData = JSON.stringify(this.data);
-                    localStorage.setItem('list', objData);
+                    localStorage.setItem('listLV2', objData);
                 },
             },
             mounted() {
