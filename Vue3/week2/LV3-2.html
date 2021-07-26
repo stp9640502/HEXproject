@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue3 week2 練習</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <style>
+        body {
+            background: lightblue;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" class="container my-5">
+        <h1 class="mb-3">Vue3練習 簡易計算機</h1>
+        <div class="row justify-content-center">
+            <div class="col-6 border">
+                <!-- 顯示面板 -->
+                <div class="textArea">
+                    <p>{{ num1 }} {{ operator }} {{ num2 }} <span v-if="num2 != '' ">=</span></p>
+                    <h2>{{ num }}</h2>
+                </div>
+                <hr>
+                <!-- 按鈕群 -->
+                <div class="btnArea my-3">
+                    <div class="btn-group w-100">
+                        <button type="button" class="btn btn-outline-primary w-25 mb-1" :class="{active:operator=='%'}"
+                            @click="compute" :value="'%'">
+                            %
+                        </button>
+                        <button type="button" class="btn btn-outline-primary w-25 mb-1" @click="negative">
+                            +/-
+                        </button>
+                        <button type="button" class="btn btn-outline-primary w-25 mb-1" @click="allClear">
+                            AC
+                        </button>
+                        <button type="button" class="btn btn-outline-primary w-25 mb-1" @click="del">
+                            <i class="bi bi-backspace"></i>
+                        </button>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-9 pe-1">
+                            <div class="btn-group w-100">
+                                <button type="button" class="btn btn-outline-primary mb-1" v-for="number in 3"
+                                    :key="number" @click="inputNum" :value="number+6">{{ number+6 }}
+                                </button>
+                            </div>
+                            <div class="btn-group w-100">
+                                <button type="button" class="btn btn-outline-primary mb-1" v-for="number in 3"
+                                    :key="number" @click="inputNum" :value="number+3">{{ number+3 }}
+                                </button>
+                            </div>
+                            <div class="btn-group w-100">
+                                <button type="button" class="btn btn-outline-primary mb-1" v-for="number in 3"
+                                    :key="number" @click="inputNum" :value="number">{{ number }}
+                                </button>
+                            </div>
+                            <div class="btn-group w-100">
+                                <button type="button" class="btn btn-outline-primary w-50" @click="inputNum"
+                                    value="0">0</button>
+                                <button type="button" class="btn btn-outline-primary w-25" @click="ANSwer">
+                                    =
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-3 ps-0">
+                            <button type="button" class="btn btn-outline-primary w-100 mb-1"
+                                :class="{active:operator=='/'}" @click="compute" :value="'/'">
+                                /
+                            </button>
+                            <button type="button" class="btn btn-outline-primary w-100 mb-1"
+                                :class="{active:operator=='*'}" @click="compute" :value="'*'">
+                                *
+                            </button>
+                            <button type="button" class="btn btn-outline-primary w-100 mb-1"
+                                :class="{active:operator=='-'}" @click="compute" :value="'-'">
+                                -
+                            </button>
+                            <button type="button" class="btn btn-outline-primary w-100 mb-1"
+                                :class="{active:operator=='+'}" @click="compute" :value="'+'">
+                                +
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <h2>歷史紀錄 : 
+                    <button class="btn btn-outline-primary ms-3" @click="clearItem">清除全部</button>
+                </h2>
+                <ul>
+                    <li v-for="(item,i) in data" :key="i">{{ item }}
+                        <i class="bi bi-x-circle-fill ms-5" @click="delItem(i)"></i>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    data: [],
+                    num: 0,
+                    num1: 0,
+                    num2: 0,
+                    results: '',
+                    operator: '',
+                    operatorStatus: false,
+                    status: false,
+                }
+            },
+            methods: {
+                // 數字輸入
+                inputNum(e) {
+                    if (this.status) {
+                        this.allClear();
+                    }
+                    else if (this.operatorStatus) {
+                        this.num = 0;
+                    }
+                    this.num = this.num * 10 + parseInt(e.target.value);
+                    this.operatorStatus = false;
+                },
+
+                // 運算子
+                compute(e) {
+                    if (this.num2 != '') {
+                        this.num2 = '';
+                        this.status = false;
+                    };
+                    this.operator = e.target.value;
+                    this.num1 = this.num;
+                    this.operatorStatus = true;
+                },
+                negative(){
+                    this.num = ( - this.num)
+                },
+
+                ANSwer() { // 先判斷是否為第一次運算，再進行運算結果
+                    if (this.status) {
+                        this.num1 = this.num;
+                    }
+                    else {
+                        if (this.num1 == '') {
+                            return;
+                        }
+                        this.num2 = this.num;
+                    }
+
+                    switch (this.operator) {
+                        case '+': {
+                            this.results = this.num1 + this.num2;
+                            break;
+                        }
+                        case '-': {
+                            this.results = this.num1 - this.num2;
+                            break;
+                        }
+                        case '*': {
+                            this.results = this.num1 * this.num2;
+                            break;
+                        }
+                        case '/': {
+                            this.results = this.num1 / this.num2;
+                            break;
+                        }
+                        case '%': {
+                            this.results = this.num1 % this.num2;
+                            break;
+                        }
+                    }
+                    this.num = this.results;
+                    this.setItem();
+                    this.status = true;
+                },
+
+                allClear() {
+                    this.num = 0;
+                    this.num1 = '';
+                    this.num2 = '';
+                    this.results = '';
+                    this.operator = '';
+                    this.operatorStatus = false;
+                    this.status = false;
+                },
+                del() {
+                    this.num = parseInt(this.num / 10);
+                },
+
+                getItem() { //從 localStirage 取資料
+                    if (localStorage.getItem('Vue3Week2Level3')) {
+                        this.data = JSON.parse(localStorage.getItem('Vue3Week2Level3'));
+                    }
+                },
+
+                setItem() {
+                    let results = `${this.num1} ${this.operator} ${this.num2} = ${this.results}`;
+                    if (this.data.length > 9) {
+                        this.data.splice(0, 1);
+                    }
+                    this.data.push(results);
+                    let objData = JSON.stringify(this.data);
+                    localStorage.setItem('Vue3Week2Level3', objData)
+                },
+                delItem(i) {
+                    this.data.splice(i, 1);
+                    let objData = JSON.stringify(this.data);
+                    localStorage.setItem('Vue3Week2Level3', objData)
+                },
+                clearItem() {
+                    this.data = [];
+                    let objData = JSON.stringify(this.data);
+                    localStorage.setItem('Vue3Week2Level3', objData)
+                }
+
+
+            },
+            mounted() {
+                this.allClear();
+                this.getItem();
+            },
+        });
+        app.mount('#app')
+    </script>
+</body>
+
+</html>
